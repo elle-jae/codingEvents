@@ -14,25 +14,25 @@ import java.util.List;
 @RequestMapping("events")
 public class EventController {
 
+    private static List<String> events = new ArrayList<>();
+
     @GetMapping
     public String displayAllEvents (Model model){
-        List<String> events = new ArrayList<>();
-        events.add("Event A");
-        events.add("Event B");
-        events.add("Event C");
         model.addAttribute("events", events);
         return "events/index";
     }
 
-    //this method lives at /events
+    //this method lives at /events/create
     @GetMapping("create")
     public String renderCreateEventForm() {
         return "events/create";
     }
 
-    @PostMapping
+    //lives at same route as GetMapping /events/create
+    @PostMapping("create")
     public String createEvent(@RequestParam String eventName) {
-
+        events.add(eventName);
+        return "redirect:/events";
     }
 
 }
